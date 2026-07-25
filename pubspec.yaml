@@ -24,7 +24,7 @@ dependencies:
   geolocator: ^13.0.2
 
   # Sensors
-  sensors_plus: ^6.1.1
+  sensors_plus: ^7.1.0
 
   # Compass
   flutter_compass: ^0.8.1
