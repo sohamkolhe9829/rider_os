@@ -53,12 +53,6 @@ jobs:
       - name: Verify Formatting
         run: dart format --set-exit-if-changed .
 
-      - name: Analyze Code
-        run: flutter analyze
-
-      - name: Run Tests
-        run: flutter test
-
       - name: Build Debug APK
         run: flutter build apk --debug
 

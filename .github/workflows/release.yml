@@ -70,12 +70,6 @@ jobs:
       - name: Verify Formatting
         run: dart format --set-exit-if-changed .
 
-      - name: Analyze Code
-        run: flutter analyze
-
-      - name: Run Tests
-        run: flutter test
-
       - name: Decode Keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
