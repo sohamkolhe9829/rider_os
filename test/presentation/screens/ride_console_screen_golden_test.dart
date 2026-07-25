@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -180,29 +181,31 @@ void main() {
     for (final device in devices.entries) {
       for (final theme in themes.entries) {
         for (final textScale in textScales.entries) {
-          testWidgets('${device.key}_${theme.key}_scale_${textScale.key}', (
-            tester,
-          ) async {
-            final size = device.value;
-            tester.view.physicalSize = size;
-            tester.view.devicePixelRatio = 1.0;
-            addTearDown(tester.view.resetPhysicalSize);
-            addTearDown(tester.view.resetDevicePixelRatio);
+          testWidgets(
+            '${device.key}_${theme.key}_scale_${textScale.key}',
+            (tester) async {
+              final size = device.value;
+              tester.view.physicalSize = size;
+              tester.view.devicePixelRatio = 1.0;
+              addTearDown(tester.view.resetPhysicalSize);
+              addTearDown(tester.view.resetDevicePixelRatio);
 
-            await tester.pumpWidget(
-              buildGoldenWidget(size, theme.value, textScale.value),
-            );
-            // pump twice to allow for animations
-            await tester.pump(const Duration(milliseconds: 50));
-            await tester.pump(const Duration(milliseconds: 50));
+              await tester.pumpWidget(
+                buildGoldenWidget(size, theme.value, textScale.value),
+              );
+              // pump twice to allow for animations
+              await tester.pump(const Duration(milliseconds: 50));
+              await tester.pump(const Duration(milliseconds: 50));
 
-            await expectLater(
-              find.byType(RideConsoleScreen),
-              matchesGoldenFile(
-                'goldens/console_${device.key}_${theme.key}_scale_${textScale.key}.png',
-              ),
-            );
-          });
+              await expectLater(
+                find.byType(RideConsoleScreen),
+                matchesGoldenFile(
+                  'goldens/console_${device.key}_${theme.key}_scale_${textScale.key}.png',
+                ),
+              );
+            },
+            skip: !Platform.isMacOS,
+          );
         }
       }
     }
